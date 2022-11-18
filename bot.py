@@ -3,9 +3,6 @@ import os
 import requests
 import json
 import random
-from replit import db
-from keep_alive import keep_alive
-client = discord.Client()
 from discord.ext import commands
 from discord.ext.commands import Bot
 from discord.utils import get
@@ -25,8 +22,8 @@ import sys
 from secret import token
 
 
-client = commands.Bot(command_prefix="<", case_insensitive=True)
-bot = commands.Bot(command_prefix="<", case_insensitive=True)
+client = commands.Bot(command_prefix="<", case_insensitive=True, intents=discord.Intents.default())
+
 
 
 ##### POLL
