@@ -22,7 +22,7 @@ import sys
 from secret import token
 
 
-client = commands.Bot(command_prefix="<", case_insensitive=True, intents=discord.Intents.default())
+client = commands.Bot(command_prefix="<", case_insensitive=True, intents=discord.Intents.all())
 
 
 
@@ -73,6 +73,30 @@ async def aank(ctx, *, content: str):
     message = await ctx.channel.send(embed=embed)
     #add the reactions
     await message.add_reaction("👍")
+
+@client.event
+async def on_command_error(ctx, error):
+    if isinstance(error, MissingPermissions):
+        await ctx.channel.send(
+            "u heeft geen toestemming om dit te gebruiken")
+
+
+#####onderhoud?
+@client.command(pass_context=False ,hidden=True)
+@commands.is_owner()
+async def main(ctx, *, content: str):
+    print("Creating announcement")
+    #create the embed file
+    embed = discord.Embed(
+        title=f"{content}",
+        description="",
+        color=0x0000FF)
+    #set the author and icon
+    embed.set_author(name="BOT ONDERHOUD AANKONDIGING: ")
+    print("Embed created")
+    #send the embed
+    message = await ctx.message.delete()
+    message = await ctx.channel.send(embed=embed)
 
 @client.event
 async def on_command_error(ctx, error):
@@ -153,8 +177,6 @@ async def on_command_error(ctx, error):
 
 @client.command(pass_context=True, name='meme', help='Stuurt een meme')
 async def meme(ctx):
-    async with ctx.typing():
-      await asyncio.sleep(1)
     content = get("https://meme-api.herokuapp.com/gimme").text
     data = json.loads(content, )
     meme = discord.Embed(
