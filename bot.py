@@ -173,16 +173,12 @@ async def on_command_error(ctx, error):
 
 
 ###MEME
-
-
 @client.command(pass_context=True, name='meme', help='Stuurt een meme')
 async def meme(ctx):
     content = get("https://meme-api.herokuapp.com/gimme").text
-    data = json.loads(content, )
-    meme = discord.Embed(
-        title=f"{data['title']}",
-        Color=discord.Color.random()).set_image(url=f"{data['url']}")
-    await ctx.channel.send(embed=meme)
+    data = json.loads(content,)
+    meme = discord.Embed(title=f"{data['title']}", Color = discord.Color.random()).set_image(url=f"{data['url']}")
+    await ctx.reply(embed=meme)
 
 ###IP
 
